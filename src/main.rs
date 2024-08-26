@@ -22,11 +22,13 @@ fn main() {
     let rust_files = find_rust_files(&args.dir);
 
     for file in rust_files {
+        println!("File: {}", file);
         if let Ok(content) = fs::read_to_string(&file) {
             if let Ok(syntax) = syn::parse_file(&content) {
                 let inspector = Inspector::new(syntax, file.clone());
                 inspector.inspect_file();
             }
         }
+        println!("");
     }
 }

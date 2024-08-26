@@ -1,4 +1,4 @@
-use syn::{File, ImplItemFn, Item, ItemFn, ItemImpl, ItemStruct};
+use syn::{File, ImplItemFn, Item, ItemFn, ItemImpl, ItemStruct, Token};
 
 pub struct Inspector {
     path: String,
@@ -51,18 +51,19 @@ impl Inspector {
     }
 
     pub fn print_fn(&self, s: &ItemFn) {
-        println!("Fn: {}", s.sig.ident);
+        println!("  Fn: {}", s.sig.ident);
     }
 
     pub fn print_impl_fn(&self, s: &ImplItemFn) {
+        let t = s.sig.fn_token;
         println!("  ImplFn: {}", s.sig.ident);
     }
 
     fn print_struct(&self, s: &ItemStruct) {
-        println!("{}\tStruct: {}", self.path, s.ident);
+        println!("  Struct: {}", s.ident);
         for field in &s.fields {
             if let Some(ident) = &field.ident {
-                println!("  Field: {}", ident);
+                println!("    Field: {}", ident);
             }
         }
     }
